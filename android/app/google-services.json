@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "916182167321",
+    "firebase_url": "https://adotedogs-cb2df.firebaseio.com",
+    "project_id": "adotedogs-cb2df",
+    "storage_bucket": "adotedogs-cb2df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916182167321:android:dfb8be44e4a5ebf0d65f88",
+        "android_client_info": {
+          "package_name": "com.alisson.trabalhoadotedos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916182167321-rrrgqa35o17falpqt3d5032qqm3o9bov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alisson.trabalhoadotedos",
+            "certificate_hash": "dd6c119c796c8e4d1172b2755062b01353152dbf"
+          }
+        },
+        {
+          "client_id": "916182167321-ql34vkfkr8nog3lesp4ar11jvmi25a16.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAv6Ld4aNe2bmaQWDUb2ZTQmdj-XtHWrow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916182167321-ql34vkfkr8nog3lesp4ar11jvmi25a16.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
