@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:trabalhoprofessor/ui/animalcad.dart';
 import 'package:trabalhoprofessor/ui/drawer.dart';
 
 
@@ -22,7 +23,13 @@ class _HomeState extends State<Home> {
       ),
       drawer: DrawerPet(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AnimalCad()
+              ));
+        },
         child: Icon(Icons.add),
         backgroundColor: Colors.green,
       ),
