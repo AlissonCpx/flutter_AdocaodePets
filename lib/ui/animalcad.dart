@@ -1,7 +1,14 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:trabalhoprofessor/classes/util.dart';
 
 class AnimalCad extends StatefulWidget {
   @override
@@ -10,9 +17,17 @@ class AnimalCad extends StatefulWidget {
 
 class _AnimalCadState extends State<AnimalCad> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
+  FirebaseUser currentUser;
 
+  //Variaveis
   int porteCachorro = 1;
   bool vacinado = false;
+  File imagem;
+  bool loading = false;
+  TextEditingController nome = TextEditingController();
+  TextEditingController raca = TextEditingController();
+  TextEditingController idade = TextEditingController();
 
   // notas
 
@@ -21,17 +36,134 @@ class _AnimalCadState extends State<AnimalCad> {
   double brincalhao = 1.0;
   double inteligente = 1.0;
 
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.onAuthStateChanged.listen((user) {
+      setState(() {
+        currentUser = user;
+      });
+    });
+  } //Metodos
 
+  void cadastroPet() async {
+    setState(() {
+      loading = true;
+    });
+    final FirebaseUser user = await Util().getUser();
 
+    if (user == null) {
+      scaffoldkey.currentState.showSnackBar(SnackBar(
+        content: Text("Não foi possivel efetuar o login. Tente novamente!"),
+        backgroundColor: Colors.red,
+      ));
+    }
 
-  //Metodos
+    Map<String, dynamic> data = {
+      "user": user.uid,
+      "senderName": user.displayName,
+      "userPhotoUrl": user.photoUrl,
+      'time': Timestamp.now(),
+      'nome': nome.text,
+      'raca': raca.text,
+      'idade': idade.text,
+      'vacinado': vacinado,
+      'porte': porteCachorro,
+      'docil': docil,
+      'companheiro': companheiro,
+      'brincalhao': brincalhao,
+      'inteligente': inteligente
+    };
 
+    if (imagem != null) {
+      StorageUploadTask task = FirebaseStorage.instance
+          .ref()
+          .child(DateTime.now().millisecondsSinceEpoch.toString())
+          .putFile(imagem);
 
+      StorageTaskSnapshot taskSnapshot = await task.onComplete;
+      String url = await taskSnapshot.ref.getDownloadURL();
+      data['imgUrl'] = url;
+    }
+    Firestore.instance.collection("pet").add(data);
+    setState(() {
+      loading = false;
+    });
+    scaffoldkey.currentState.showSnackBar(SnackBar(
+      content: Text("Cadastro Efetuado com Sucesso!"),
+      duration: Duration(seconds: 3),
+      onVisible: () {
+        Future.delayed(Duration(seconds: 3)).then((value) {
+          Navigator.pop(context);
+        });
+      },
+      backgroundColor: Colors.amber,
+    ));
+  }
 
+  void showOptions(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return BottomSheet(
+              onClosing: () {},
+              builder: (context) {
+                return Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                              child: Column(
+                            children: <Widget>[
+                              IconButton(
+                                  icon: Icon(Icons.camera_alt),
+                                  onPressed: () async {
+                                    final File imgFile =
+                                        await ImagePicker.pickImage(
+                                            source: ImageSource.camera);
+                                    if (imgFile != null) {
+                                      setState(() {
+                                        imagem = imgFile;
+                                      });
+                                    }
+                                  }),
+                              Text("Camera")
+                            ],
+                          )),
+                          Expanded(
+                              child: Column(
+                            children: <Widget>[
+                              IconButton(
+                                  icon: Icon(Icons.photo),
+                                  onPressed: () async {
+                                    final File imgFile =
+                                        await ImagePicker.pickImage(
+                                            source: ImageSource.gallery);
+                                    if (imgFile != null) {
+                                      setState(() {
+                                        imagem = imgFile;
+                                      });
+                                    }
+                                  }),
+                              Text("Galeria")
+                            ],
+                          ))
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              });
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldkey,
       appBar: AppBar(
         title: Text("Cadastro de Adoção"),
         centerTitle: true,
@@ -55,6 +187,8 @@ class _AnimalCadState extends State<AnimalCad> {
                                 Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: TextFormField(
+                                    autofocus: false,
+                                    controller: nome,
                                     decoration: InputDecoration(
                                         labelText: "Nome do Pet",
                                         labelStyle:
@@ -72,6 +206,26 @@ class _AnimalCadState extends State<AnimalCad> {
                                 Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: TextFormField(
+                                    controller: raca,
+                                    autofocus: false,
+                                    decoration: InputDecoration(
+                                        labelText: "Raça",
+                                        labelStyle:
+                                            TextStyle(color: Colors.green)),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.green, fontSize: 18.0),
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return "Insira a raça do Pet";
+                                      }
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: TextFormField(
+                                    controller: idade,
                                     keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                         labelText: "Idade do Pet",
@@ -287,14 +441,64 @@ class _AnimalCadState extends State<AnimalCad> {
                                   },
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 40),
-                                  child: RaisedButton(
-                                    onPressed: () {
-                                      if (formkey.currentState.validate()) {}
-                                    },
-                                    child: Text("Cadastrar"),
-                                    color: Colors.green,
+                                  padding: EdgeInsets.all(30.0),
+                                  child: Text(
+                                    "Insira uma foto:",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
                                   ),
+                                ),
+                                imagem != null
+                                    ? Image.file(
+                                        imagem,
+                                        width: 250,
+                                        height: 250,
+                                      )
+                                    : GestureDetector(
+                                        onTap: () async {
+                                          showOptions(context);
+                                        },
+                                        child: Container(
+                                          width: 150.0,
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              boxShadow: <BoxShadow>[
+                                                BoxShadow(
+                                                  offset: Offset(1.0, 6.0),
+                                                  blurRadius: 75.0,
+                                                ),
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              border: Border.all(
+                                                  color: Colors.black)),
+                                          child: Column(
+                                            children: <Widget>[
+                                              Icon(
+                                                Icons.camera_alt,
+                                                size: 30,
+                                              ),
+                                              Text("Escolha uma foto")
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 40),
+                                  child: loading
+                                      ? CircularProgressIndicator()
+                                      : RaisedButton(
+                                          onPressed: () {
+                                            if (formkey.currentState
+                                                .validate()) {
+                                              cadastroPet();
+                                            }
+                                          },
+                                          child: Text("Cadastrar"),
+                                          color: Colors.green,
+                                        ),
                                 )
                               ],
                             )),
