@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:trabalhoprofessor/classes/util.dart';
+import 'package:trabalhoprofessor/ui/gerenadot.dart';
 
 class DrawerPet extends StatefulWidget {
   @override
@@ -62,17 +63,24 @@ class _DrawerState extends State<DrawerPet> {
     return Column(
       children: <Widget>[
         ListTile(
+          enabled: nameUser != "" ? true : false,
           contentPadding: EdgeInsets.all(10.0),
           leading: Icon(
-            Icons.star,
-            color: Colors.black,
+            Icons.devices,
+            color: nameUser != "" ? Colors.black : Colors.grey,
             size: 40,
           ),
           title: Text(
-            "Favoritos",
-            style: TextStyle(color: Colors.black),
+            "Gerenciar Adoções",
+            style:
+                TextStyle(color: nameUser != "" ? Colors.black : Colors.grey),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Gerenciador(currentUser.uid)));
+          },
           selected: true,
         ),
         ListTile(

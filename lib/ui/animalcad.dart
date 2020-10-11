@@ -28,6 +28,7 @@ class _AnimalCadState extends State<AnimalCad> {
   TextEditingController nome = TextEditingController();
   TextEditingController raca = TextEditingController();
   TextEditingController idade = TextEditingController();
+  TextEditingController telefone = TextEditingController();
 
   // notas
 
@@ -72,7 +73,8 @@ class _AnimalCadState extends State<AnimalCad> {
       'docil': docil,
       'companheiro': companheiro,
       'brincalhao': brincalhao,
-      'inteligente': inteligente
+      'inteligente': inteligente,
+      'telefone': telefone.text,
     };
 
     if (imagem != null) {
@@ -486,7 +488,25 @@ class _AnimalCadState extends State<AnimalCad> {
                                         ),
                                       ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 40),
+                                  padding: EdgeInsets.only(top: 15),
+                                  child: Center(
+                                    child: Container(
+                                      width: 200,
+                                      height: 25,
+                                      color: Colors.white,
+                                      child: TextField(
+                                        controller: telefone,
+                                        keyboardType: TextInputType.number,
+                                        style: TextStyle(fontSize: 20),
+                                        decoration: InputDecoration.collapsed(
+                                            hintText: "Numero para contato",
+                                            hintStyle: TextStyle()),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 10),
                                   child: loading
                                       ? CircularProgressIndicator()
                                       : RaisedButton(

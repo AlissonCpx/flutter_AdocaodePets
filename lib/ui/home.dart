@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trabalhoprofessor/ui/animalcad.dart';
+import 'package:trabalhoprofessor/ui/detalhes.dart';
 import 'package:trabalhoprofessor/ui/drawer.dart';
 
 class Home extends StatefulWidget {
@@ -57,7 +58,7 @@ class _HomeState extends State<Home> {
 
                             return ListView.builder(
                               itemCount: documents.length,
-                              reverse: true,
+                              reverse: false,
                               itemBuilder: (context, index) {
                                 return Card(
                                   color: Colors.yellow,
@@ -153,7 +154,10 @@ class _HomeState extends State<Home> {
                                             child: Padding(
                                               padding: EdgeInsets.all(10.0),
                                               child: RaisedButton(
-                                                onPressed: () {},
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                      context, MaterialPageRoute(builder: (context) => Detalhes(documents[index])));
+                                                },
                                                 color: Colors.amber,
                                                 child: Text("Adotar"),
                                               ),
