@@ -130,6 +130,7 @@ class _AnimalCadState extends State<AnimalCad> {
                                       setState(() {
                                         imagem = imgFile;
                                       });
+                                      Navigator.pop;
                                     }
                                   }),
                               Text("Camera")
@@ -148,6 +149,7 @@ class _AnimalCadState extends State<AnimalCad> {
                                       setState(() {
                                         imagem = imgFile;
                                       });
+                                      Navigator.pop;
                                     }
                                   }),
                               Text("Galeria")
@@ -171,373 +173,374 @@ class _AnimalCadState extends State<AnimalCad> {
         centerTitle: true,
         backgroundColor: Colors.lime,
       ),
-      body: Column(
-        children: <Widget>[
-          Stack(
-            children: <Widget>[
-              Container(
-                  margin: EdgeInsets.only(top: 165.0),
-                  color: Colors.lightGreenAccent,
-                  height: 438,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Form(
-                            key: formkey,
-                            child: Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: TextFormField(
-                                    autofocus: false,
-                                    controller: nome,
-                                    decoration: InputDecoration(
-                                        labelText: "Nome do Pet",
-                                        labelStyle:
-                                            TextStyle(color: Colors.green)),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.green, fontSize: 18.0),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return "Insira o nome do Pet";
-                                      }
-                                    },
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: TextFormField(
-                                    controller: raca,
-                                    autofocus: false,
-                                    decoration: InputDecoration(
-                                        labelText: "Raça",
-                                        labelStyle:
-                                            TextStyle(color: Colors.green)),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.green, fontSize: 18.0),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return "Insira a raça do Pet";
-                                      }
-                                    },
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: TextFormField(
-                                    controller: idade,
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                        labelText: "Idade do Pet",
-                                        labelStyle:
-                                            TextStyle(color: Colors.green)),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.green, fontSize: 18.0),
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return "Insira a idade do seu pet";
-                                      }
-                                    },
-                                  ),
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          right: 7.0, left: 10.0),
-                                      child: Text(
-                                        "Porte do Pet: ",
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                    Container(
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            color: Colors.green,
-                                            border: Border.all()),
-                                        child: Padding(
-                                          padding: EdgeInsets.only(left: 5.0),
-                                          child: DropdownButton(
-                                              dropdownColor: Colors.green,
-                                              iconSize: 30,
-                                              value: porteCachorro,
-                                              items: [
-                                                DropdownMenuItem(
-                                                  child: Text(
-                                                    "Pequeno",
-                                                  ),
-                                                  value: 1,
-                                                ),
-                                                DropdownMenuItem(
-                                                  child: Text("Medio"),
-                                                  value: 2,
-                                                ),
-                                                DropdownMenuItem(
-                                                    child: Text("Grande"),
-                                                    value: 3),
-                                              ],
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  porteCachorro = value;
-                                                });
-                                              }),
-                                        )),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          right: 7.0, left: 40.0),
-                                      child: Text(
-                                        "Vacinado: ",
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                    Checkbox(
-                                      value: vacinado,
-                                      activeColor: Colors.green,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          vacinado = value;
-                                        });
-                                      },
-                                    )
-                                  ],
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 40.0, right: 40.0, top: 30.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          "Dócil",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Divider(
-                                          color: Colors.black,
-                                        ),
-                                      ],
-                                    )),
-                                RatingBar(
-                                  initialRating: docil,
-                                  minRating: 1,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemPadding:
-                                      EdgeInsets.symmetric(horizontal: 0.0),
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  onRatingUpdate: (rating) {
-                                    setState(() {
-                                      docil = rating;
-                                    });
-                                  },
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 40.0, right: 40.0, top: 30.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          "Companheiro",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Divider(
-                                          color: Colors.black,
-                                        ),
-                                      ],
-                                    )),
-                                RatingBar(
-                                  initialRating: companheiro,
-                                  minRating: 1,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemPadding:
-                                      EdgeInsets.symmetric(horizontal: 0.0),
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  onRatingUpdate: (rating) {
-                                    setState(() {
-                                      companheiro = rating;
-                                    });
-                                  },
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 40.0, right: 40.0, top: 30.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          "Brincalhão",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Divider(
-                                          color: Colors.black,
-                                        ),
-                                      ],
-                                    )),
-                                RatingBar(
-                                  initialRating: brincalhao,
-                                  minRating: 1,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemPadding:
-                                      EdgeInsets.symmetric(horizontal: 0.0),
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  onRatingUpdate: (rating) {
-                                    setState(() {
-                                      brincalhao = rating;
-                                    });
-                                  },
-                                ),
-                                Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 40.0, right: 40.0, top: 30.0),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          "Inteligente",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Divider(
-                                          color: Colors.black,
-                                        ),
-                                      ],
-                                    )),
-                                RatingBar(
-                                  initialRating: inteligente,
-                                  minRating: 1,
-                                  direction: Axis.horizontal,
-                                  allowHalfRating: true,
-                                  itemCount: 5,
-                                  itemPadding:
-                                      EdgeInsets.symmetric(horizontal: 0.0),
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  onRatingUpdate: (rating) {
-                                    setState(() {
-                                      inteligente = rating;
-                                    });
-                                  },
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(30.0),
-                                  child: Text(
-                                    "Insira uma foto:",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                imagem != null
-                                    ? Image.file(
-                                        imagem,
-                                        width: 250,
-                                        height: 250,
-                                      )
-                                    : GestureDetector(
-                                        onTap: () async {
-                                          showOptions(context);
-                                        },
-                                        child: Container(
-                                          width: 150.0,
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                              color: Colors.green,
-                                              boxShadow: <BoxShadow>[
-                                                BoxShadow(
-                                                  offset: Offset(1.0, 6.0),
-                                                  blurRadius: 75.0,
-                                                ),
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              border: Border.all(
-                                                  color: Colors.black)),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.camera_alt,
-                                                size: 30,
-                                              ),
-                                              Text("Escolha uma foto")
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 15),
-                                  child: Center(
-                                    child: Container(
-                                      width: 200,
-                                      height: 25,
-                                      color: Colors.white,
-                                      child: TextField(
-                                        controller: telefone,
-                                        keyboardType: TextInputType.number,
-                                        style: TextStyle(fontSize: 20),
-                                        decoration: InputDecoration.collapsed(
-                                            hintText: "Numero para contato",
-                                            hintStyle: TextStyle()),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 10),
-                                  child: loading
-                                      ? CircularProgressIndicator()
-                                      : RaisedButton(
-                                          onPressed: () {
-                                            if (formkey.currentState
-                                                .validate()) {
-                                              cadastroPet();
-                                            }
-                                          },
-                                          child: Text("Cadastrar"),
-                                          color: Colors.green,
-                                        ),
-                                )
-                              ],
-                            )),
-                      ],
-                    ),
-                  )),
-              Positioned(
-                bottom: 425,
-                left: 100,
-                child: Image.asset(
-                  "assets/catanddog.png",
-                  width: 200,
-                  height: 200,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Positioned(
+                  left: 100,
+                  child: Image.asset(
+                    "assets/catanddog.png",
+                    width: 200,
+                    height: 200,
+                  ),
                 ),
-              ),
-            ],
-          )
-        ],
-      ),
+                Container(
+                    margin: EdgeInsets.only(top: 165.0),
+                    color: Colors.lightGreenAccent,
+                    height: MediaQuery.of(context).size.height*0.64,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Form(
+                              key: formkey,
+                              child: Column(
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: TextFormField(
+                                      autofocus: false,
+                                      controller: nome,
+                                      decoration: InputDecoration(
+                                          labelText: "Nome do Pet",
+                                          labelStyle:
+                                          TextStyle(color: Colors.green)),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.green, fontSize: 18.0),
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return "Insira o nome do Pet";
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: TextFormField(
+                                      controller: raca,
+                                      autofocus: false,
+                                      decoration: InputDecoration(
+                                          labelText: "Raça",
+                                          labelStyle:
+                                          TextStyle(color: Colors.green)),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.green, fontSize: 18.0),
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return "Insira a raça do Pet";
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: TextFormField(
+                                      controller: idade,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                          labelText: "Idade do Pet",
+                                          labelStyle:
+                                          TextStyle(color: Colors.green)),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.green, fontSize: 18.0),
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return "Insira a idade do seu pet";
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            right: 7.0, left: 10.0),
+                                        child: Text(
+                                          "Porte do Pet: ",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                      Container(
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(10.0),
+                                              color: Colors.green,
+                                              border: Border.all()),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(left: 5.0),
+                                            child: DropdownButton(
+                                                dropdownColor: Colors.green,
+                                                iconSize: 30,
+                                                value: porteCachorro,
+                                                items: [
+                                                  DropdownMenuItem(
+                                                    child: Text(
+                                                      "Pequeno",
+                                                    ),
+                                                    value: 1,
+                                                  ),
+                                                  DropdownMenuItem(
+                                                    child: Text("Medio"),
+                                                    value: 2,
+                                                  ),
+                                                  DropdownMenuItem(
+                                                      child: Text("Grande"),
+                                                      value: 3),
+                                                ],
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    porteCachorro = value;
+                                                  });
+                                                }),
+                                          )),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            right: 7.0, left: 40.0),
+                                        child: Text(
+                                          "Vacinado: ",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ),
+                                      Checkbox(
+                                        value: vacinado,
+                                        activeColor: Colors.green,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            vacinado = value;
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 40.0, right: 40.0, top: 30.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            "Dócil",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Divider(
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                      )),
+                                  RatingBar(
+                                    initialRating: docil,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 0.0),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      setState(() {
+                                        docil = rating;
+                                      });
+                                    },
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 40.0, right: 40.0, top: 30.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            "Companheiro",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Divider(
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                      )),
+                                  RatingBar(
+                                    initialRating: companheiro,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 0.0),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      setState(() {
+                                        companheiro = rating;
+                                      });
+                                    },
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 40.0, right: 40.0, top: 30.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            "Brincalhão",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Divider(
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                      )),
+                                  RatingBar(
+                                    initialRating: brincalhao,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 0.0),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      setState(() {
+                                        brincalhao = rating;
+                                      });
+                                    },
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 40.0, right: 40.0, top: 30.0),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            "Inteligente",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Divider(
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                      )),
+                                  RatingBar(
+                                    initialRating: inteligente,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemPadding:
+                                    EdgeInsets.symmetric(horizontal: 0.0),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      setState(() {
+                                        inteligente = rating;
+                                      });
+                                    },
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(30.0),
+                                    child: Text(
+                                      "Insira uma foto:",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  imagem != null
+                                      ? Image.file(
+                                    imagem,
+                                    width: 250,
+                                    height: 250,
+                                  )
+                                      : GestureDetector(
+                                    onTap: () async {
+                                      showOptions(context);
+                                    },
+                                    child: Container(
+                                      width: 150.0,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          boxShadow: <BoxShadow>[
+                                            BoxShadow(
+                                              offset: Offset(1.0, 6.0),
+                                              blurRadius: 75.0,
+                                            ),
+                                          ],
+                                          borderRadius:
+                                          BorderRadius.circular(10.0),
+                                          border: Border.all(
+                                              color: Colors.black)),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.camera_alt,
+                                            size: 30,
+                                          ),
+                                          Text("Escolha uma foto")
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 15),
+                                    child: Center(
+                                      child: Container(
+                                        width: 200,
+                                        height: 25,
+                                        color: Colors.white,
+                                        child: TextField(
+                                          controller: telefone,
+                                          keyboardType: TextInputType.number,
+                                          style: TextStyle(fontSize: 20),
+                                          decoration: InputDecoration.collapsed(
+                                              hintText: "Numero para contato",
+                                              hintStyle: TextStyle()),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(top: 10),
+                                    child: loading
+                                        ? CircularProgressIndicator()
+                                        : RaisedButton(
+                                      onPressed: () {
+                                        if (formkey.currentState
+                                            .validate()) {
+                                          cadastroPet();
+                                        }
+                                      },
+                                      child: Text("Cadastrar"),
+                                      color: Colors.green,
+                                    ),
+                                  )
+                                ],
+                              )),
+                        ],
+                      ),
+                    )),
+              ],
+            )
+          ],
+        ),
+      )
     );
   }
 }

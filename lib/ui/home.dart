@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:trabalhoprofessor/ui/animalcad.dart';
 import 'package:trabalhoprofessor/ui/detalhes.dart';
 import 'package:trabalhoprofessor/ui/drawer.dart';
+import 'package:trabalhoprofessor/ui/pesquisa.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -14,12 +16,18 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.lightGreenAccent,
       appBar: AppBar(
         backgroundColor: Colors.lime,
         centerTitle: true,
         title: Text("Adote um Amigo"),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: () {})
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Pesquisa()));
+              })
         ],
       ),
       drawer: DrawerPet(),
@@ -37,9 +45,12 @@ class _HomeState extends State<Home> {
             Stack(
               children: <Widget>[
                 Container(
+                  color: Colors.white,
+                  height: 165,
+                ),
+                Container(
                   margin: EdgeInsets.only(top: 165.0),
-                  color: Colors.lightGreenAccent,
-                  height: 438,
+                  height: MediaQuery.of(context).size.height*0.64,
                   child: StreamBuilder<QuerySnapshot>(
                       stream: Firestore.instance
                           .collection('pet')
@@ -68,11 +79,10 @@ class _HomeState extends State<Home> {
                                         children: [
                                           Padding(
                                             padding: EdgeInsets.all(2.0),
-                                            child: Image.network(
-                                              documents[index]["imgUrl"],
-                                              width: 150,
-                                              height: 150,
-                                            ),
+                                            child: FadeInImage.memoryNetwork(
+                                                placeholder: kTransparentImage,
+                                                image: documents[index]
+                                                    ["imgUrl"], height: 150, width: 150,),
                                           ),
                                           Column(
                                             children: <Widget>[
@@ -156,7 +166,12 @@ class _HomeState extends State<Home> {
                                               child: RaisedButton(
                                                 onPressed: () {
                                                   Navigator.push(
-                                                      context, MaterialPageRoute(builder: (context) => Detalhes(documents[index])));
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              Detalhes(
+                                                                  documents[
+                                                                      index])));
                                                 },
                                                 color: Colors.amber,
                                                 child: Text("Adotar"),

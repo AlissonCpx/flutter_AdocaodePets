@@ -71,7 +71,7 @@ class _DrawerState extends State<DrawerPet> {
             size: 40,
           ),
           title: Text(
-            "Gerenciar Adoções",
+            "Gerenciar Minhas Adoções",
             style:
                 TextStyle(color: nameUser != "" ? Colors.black : Colors.grey),
           ),
@@ -119,12 +119,12 @@ class _DrawerState extends State<DrawerPet> {
           leading: Icon(
             Icons.exit_to_app,
             size: 40,
-            color: urlFotoUser != null ? Colors.black : Colors.grey,
+            color: nameUser != "" ? Colors.black : Colors.grey,
           ),
           title: Text(
             "Sair",
-            style: TextStyle(
-                color: urlFotoUser != null ? Colors.black : Colors.grey),
+            style:
+                TextStyle(color: nameUser != "" ? Colors.black : Colors.grey),
           ),
           onTap: () {
             FirebaseAuth.instance.signOut();
@@ -142,7 +142,7 @@ class _DrawerState extends State<DrawerPet> {
               });
             });
           },
-          enabled: urlFotoUser != null ? true : false,
+          enabled: nameUser != "" ? true : false,
         ),
       ],
     );

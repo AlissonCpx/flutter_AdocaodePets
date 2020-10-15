@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:trabalhoprofessor/ui/chat/chat_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Detalhes extends StatefulWidget {
@@ -55,7 +56,13 @@ class _DetalhesState extends State<Detalhes> {
                             children: <Widget>[
                               IconButton(
                                   icon: Icon(Icons.chat),
-                                  onPressed: () async {}),
+                                  onPressed: () async {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ChatScreen(widget.document)));
+                                  }),
                               Text("Chat")
                             ],
                           )),
@@ -64,8 +71,9 @@ class _DetalhesState extends State<Detalhes> {
                             children: <Widget>[
                               IconButton(
                                   icon: Icon(Icons.phone),
-                                  onPressed: (){
-                                    launch("tel:${widget.document['telefone']}");
+                                  onPressed: () {
+                                    launch(
+                                        "tel:${widget.document['telefone']}");
                                   }),
                               Text("Telefone")
                             ],
@@ -88,8 +96,7 @@ class _DetalhesState extends State<Detalhes> {
         centerTitle: true,
         backgroundColor: Colors.lightGreen,
       ),
-      body: SingleChildScrollView(
-          child: Column(
+      body: Column(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.zero,
@@ -103,7 +110,7 @@ class _DetalhesState extends State<Detalhes> {
             ),
           ),
           Container(
-            height: 298,
+            height: MediaQuery.of(context).size.height*0.435,
             color: Colors.limeAccent,
             child: Column(
               children: <Widget>[
@@ -118,23 +125,27 @@ class _DetalhesState extends State<Detalhes> {
                 ),
                 Row(
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: 20.0),
-                      child: Expanded(
-                          child: Text(
-                        "Raça: " + widget.document['raca'],
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25),
-                      )),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 20.0),
+                        child: Expanded(
+                            child: Text(
+                              "Raça: " + widget.document['raca'],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 25),
+                            )),
+                      ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 50.0),
-                      child: Expanded(
-                          child: Text(
-                        "Idade: " + widget.document['idade'] + " Anos",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25),
-                      )),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 50.0),
+                        child: Expanded(
+                            child: Text(
+                              "Idade: " + widget.document['idade'],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 25),
+                            )),
+                      ),
                     )
                   ],
                 ),
@@ -276,7 +287,7 @@ class _DetalhesState extends State<Detalhes> {
             ),
           ),
         ],
-      )),
+      )
     );
   }
 }
