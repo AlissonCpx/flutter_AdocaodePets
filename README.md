@@ -1,5 +1,5 @@
 # Adote Pet
-App feito em flutter para um trabalho de faculdade com a tematica de adoção de animais.
+App feito em flutter para um trabalho de faculdade com a temática de adoção de animais.
 
 ## Funções:
 - Cadastro
