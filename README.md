@@ -6,7 +6,7 @@ App feito em flutter para um trabalho de faculdade com a temática de adoção d
 - Pesquisa
 - Chat
 - Upload de Imagens
-- Exlusão
+- Exclusão
 - Login com o Google
 
 ## Imagens
